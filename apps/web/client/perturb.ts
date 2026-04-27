@@ -18,8 +18,8 @@ export function perturb(guessWord, scores, lettersByPosition) {
   }
 
   // We picked a contraction. Favor the others, but now we need to evaluate all possible 10 moves
-  let indices = [];
-  const directives = [];
+  let indices: number[] = [];
+  const directives: [number, number][] = [];
   for (let i = 0; i < 5; i++) {
     directives.push([i, -1]);
     directives.push([i, +1]);
@@ -41,7 +41,7 @@ export function perturb(guessWord, scores, lettersByPosition) {
     }
   }
   const index = indices[Math.floor(Math.random() * indices.length)];
-  return directives[index];
+  return directives[index] as [number, number];
 }
 
 /**

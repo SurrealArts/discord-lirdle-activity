@@ -128,7 +128,7 @@ export function findWorstLie(guessWord, scores, solverData) {
     let longestIndices = [];
     for (const i in directives) {
         const directive = directives[i];
-        const newScores = [].concat(scores);
+        const newScores = [...scores];
         newScores[directive[0]] = (newScores[directive[0]] + 3 + directive[1]) % 3;
         const numPossibleWords = evalPossibleWords(guessWord, newScores, solverData.possibleWords).length;
         if (numPossibleWords > longestDirective[0]) {

@@ -43,9 +43,9 @@ const client = new Client({
 });
 
 client.once('clientReady', async () => {
-  clog(console.log, `[apps/bot/index.js] Logged in as ${client.user.tag}!`);
+  clog(console.log, `[apps/bot/index.js] Logged in as ${client.user!.tag}!`);
 
-  const commands = [];
+  const commands: any[] = [];
 
   /**
    * Recursively find all .js files in a command directory.
@@ -54,7 +54,7 @@ client.once('clientReady', async () => {
    */
   const getCommandFiles = (dir: string): string[] => {
     const entries = readdirSync(dir, { withFileTypes: true });
-    const files = [];
+    const files: string[] = [];
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
@@ -102,7 +102,7 @@ client.once('clientReady', async () => {
     }
   })();
 
-  client.user.setPresence({
+  client.user!.setPresence({
     activities: [
       {
         type: ActivityType.Custom,

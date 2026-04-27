@@ -41,7 +41,7 @@ function encryptState(data: unknown): string {
 function decryptState(text: string): unknown[] {
   try {
     const textParts = text.split(':');
-    const iv = Buffer.from(textParts.shift(), 'hex');
+    const iv = Buffer.from(textParts.shift() || '', 'hex');
     const encryptedText = Buffer.from(textParts.join(':'), 'hex');
     const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv);
     let decrypted = decipher.update(encryptedText);
@@ -224,7 +224,14 @@ app.get('/api/load-session', async (req, res) => {
     });
 
     if (!user) {
-      user = { id: userId, currentStreak: 0, maxStreak: 0, gamesPlayed: 0, wins: 0 };
+      user = {
+        id: userId,
+        currentStreak: 0,
+        maxStreak: 0,
+        gamesPlayed: 0,
+        wins: 0,
+        seed: crypto.randomUUID(),
+      };
     }
 
     const session = await db.session.findUnique({

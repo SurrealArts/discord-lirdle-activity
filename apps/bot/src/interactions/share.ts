@@ -29,7 +29,7 @@ export const run = async (client, interaction) => {
       include: { dailyWord: true },
     });
 
-    if (!session || !session.won) {
+    if (!session || !session.won || !user) {
       const embed = new EmbedBuilder()
         .setColor('#f97316')
         .setTitle('Game Not Finished')

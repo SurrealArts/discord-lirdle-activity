@@ -81,7 +81,7 @@ export function evaluateGuess(targetWord, guess) {
         if (myGuess[i] === '#') {
             continue;
         }
-        let letterPosition = target.indexOf(myGuess[i]);
+        const letterPosition = target.indexOf(myGuess[i]);
         if (letterPosition !== -1) {
             scores[i] = 1;
             target[letterPosition] = '#';

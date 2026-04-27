@@ -89,7 +89,11 @@ export const run = async (client, interaction) => {
           };
         });
 
-        const imageBuffer = await generateGridDashboard(activePlayers, undefined, 'LIVE LIRDLE SPECTATOR');
+        const imageBuffer = await generateGridDashboard(
+          activePlayers,
+          undefined,
+          'LIVE LIRDLE SPECTATOR',
+        );
         const attachment = new AttachmentBuilder(imageBuffer, { name: 'lirdle-live.png' });
 
         const liveEmbed = new EmbedBuilder()

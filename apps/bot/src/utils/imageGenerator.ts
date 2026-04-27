@@ -151,7 +151,11 @@ export interface Player {
  * @param targetWord - The daily target word (unused in display, kept for compatibility)
  * @param title - Title text to display at the top
  */
-export async function generateGridDashboard(players: Player[], targetWord: string | undefined, title: string) {
+export async function generateGridDashboard(
+  players: Player[],
+  targetWord: string | undefined,
+  title: string,
+) {
   // Determine Grid Scaling based on Player Count
   const N = players.length;
   let cols = Math.min(N, 4);

@@ -124,7 +124,7 @@ View.prototype = {
         const letterRow = document.createElement('div');
         letterRow.className = 'letter-row';
         for (let j = 0; j < 5; j++) {
-            let box = document.createElement('div');
+            const box = document.createElement('div');
             box.className = 'letter-box';
             box.addEventListener('click', this.handleLetterBoxClick.bind(this));
             letterRow.appendChild(box);
@@ -512,8 +512,8 @@ View.prototype = {
      * @param {number} colNum - Column index (0-4)
      */
     deleteLetter(rowNum, colNum) {
-        let row = document.getElementsByClassName('letter-row')[rowNum];
-        let box = row.children[colNum];
+        const row = document.getElementsByClassName('letter-row')[rowNum];
+        const box = row.children[colNum];
         box.textContent = '';
         box.classList.remove('filled-box', 'show-lie', 'show-perceived-truth');
     },
@@ -525,8 +525,8 @@ View.prototype = {
      */
     insertLetter(pressedKey, rowNum, colNum) {
         pressedKey = pressedKey.toLowerCase();
-        let row = document.getElementsByClassName('letter-row')[rowNum];
-        let box = row.children[colNum];
+        const row = document.getElementsByClassName('letter-row')[rowNum];
+        const box = row.children[colNum];
         box.textContent = pressedKey;
         box.classList.add('filled-box');
     },
@@ -645,7 +645,7 @@ View.prototype = {
      * average tries) from the stats API. Polls every 10 minutes.
      */
     showTodaysStats() {
-        let numTriesNeededHere = this.model.saveableState.guessWords.length || 0;
+        const numTriesNeededHere = this.model.saveableState.guessWords.length || 0;
         const todaysStatsElt = document.getElementById('todaysStats');
         const todaysPctFinishedSoFarElt = todaysStatsElt.querySelector('span#todaysPctFinishedSoFar');
         const todaysAvgSoFarElt = todaysStatsElt.querySelector('span#todaysAvgSoFar');

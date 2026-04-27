@@ -27,7 +27,7 @@ export function perturb(guessWord, scores, lettersByPosition) {
         if (score < 0) {
             score = 0;
         }
-        let numIters = 10 - score;
+        const numIters = 10 - score;
         for (let j = 0; j < numIters; j++) {
             indices.push(i);
         }

@@ -30,7 +30,7 @@ export const startCronJobs = (client: Client) => {
             if (!guild) continue;
 
             const channel = await guild.channels.fetch(config.activeChannelId).catch(() => null);
-            if (!channel) continue;
+            if (!channel || !channel.isTextBased()) continue;
 
             const members = await guild.members.fetch();
             const memberIds = Array.from(members.keys()) as string[];

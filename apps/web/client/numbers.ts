@@ -71,7 +71,7 @@ export function devMode() {
  * @returns {[number, number]} [position, direction] directive
  */
 function pickALie(guessWord, scores, lettersByPosition, changes, solverData) {
-  let directive1 = null;
+  let directive1: number | null = null;
   try {
     directive1 =
       solverData.possibleWords.length > 1 ? findWorstLie(guessWord, scores, solverData) : null;
@@ -103,7 +103,10 @@ function pickALie(guessWord, scores, lettersByPosition, changes, solverData) {
  * @param {Object} solverData - Solver state
  */
 export function lie(guessWord, scores, lettersByPosition, changes, solverData) {
-  const [i, direction] = pickALie(guessWord, scores, lettersByPosition, changes, solverData);
+  const [i, direction] = pickALie(guessWord, scores, lettersByPosition, changes, solverData) as [
+    number,
+    number,
+  ];
   const oldVal = scores[i] + 3;
   scores[i] = (oldVal + direction) % 3;
   changes.push([i, oldVal - 3, scores[i]]);
@@ -125,16 +128,16 @@ export function lie(guessWord, scores, lettersByPosition, changes, solverData) {
  * @returns {[number, number]|null} [position, direction] or null if no lie found
  */
 export function findWorstLie(guessWord, scores, solverData) {
-  const directives = [];
+  const directives: [number, number][] = [];
   for (let i = 0; i < 5; i++) {
     directives.push([i, -1]);
     directives.push([i, +1]);
   }
-  let longestDirective = [-1, null]; // [length, [position, direction]]
-  let longestIndices = [];
+  let longestDirective: [number, [number, number] | null] = [-1, null]; // [length, [position, direction]]
+  let longestIndices: string[] = [];
   for (const i in directives) {
     const directive = directives[i];
-    const newScores = [].concat(scores);
+    const newScores = [...scores];
     newScores[directive[0]] = (newScores[directive[0]] + 3 + directive[1]) % 3;
     const numPossibleWords = evalPossibleWords(
       guessWord,

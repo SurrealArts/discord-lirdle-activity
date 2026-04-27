@@ -10,7 +10,7 @@ import { clog } from '@lirdle/logger';
  */
 function getInteractionFiles(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
-  const files = [];
+  const files: string[] = [];
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);

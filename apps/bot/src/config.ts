@@ -24,7 +24,13 @@ export const logTimezone = process.env.LOG_TIMEZONE || 'UTC';
  * Logs a warning for non-essential missing vars (VERSION).
  */
 function validateConfig() {
-  const missing = { essential: [], nonEssential: [] };
+  const missing: {
+    essential: string[];
+    nonEssential: string[];
+  } = {
+    essential: [],
+    nonEssential: [],
+  };
 
   if (!clientid) missing.essential.push('CLIENT_ID');
   if (!token) missing.essential.push('TOKEN');
