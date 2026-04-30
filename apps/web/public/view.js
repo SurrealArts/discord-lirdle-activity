@@ -174,7 +174,7 @@ View.prototype = {
    */
   showTheWin(guessCount, changes) {
     this.showWinningInfo(guessCount);
-    this.showDeceptiveSquares(changes);
+    this.showDeceptiveSquares(changes, guessCount);
     this.activateWordsLeftLink();
     this.showAllDone();
     this.showTodaysStats();
@@ -246,17 +246,19 @@ View.prototype = {
   /**
    * Highlight squares where the score was deceptive by adding
    * color classes (actualGreen, actualYellow, actualGrey).
-   * @param {Array} changes - Array of [position, trueScore, displayedScore]
+   * @param {Array} changes - Array of [position, trueScore, displayedScore], sparse array indexed by row
+   * @param {number} guessCount - Number of guesses made (rows to check)
    */
-  showDeceptiveSquares(changes) {
-    for (let i = 0; i < changes.length; i++) {
+  showDeceptiveSquares(changes, guessCount) {
+    for (let i = 0; i < guessCount; i++) {
       const rowContainer = this.board.children.item(i);
       if (!rowContainer) {
         console.log(`showDeceptiveSquares: No rowContainer at entry ${i}`);
         break;
       }
-      const rowLetters = rowContainer.querySelector('.letter-row');
       const change = changes[i];
+      if (!change) continue;
+      const rowLetters = rowContainer.querySelector('.letter-row');
       const box = rowLetters.children[change[0]];
       const actualColor = COLORS[change[1]];
       box.classList.add(`actual${actualColor}`);

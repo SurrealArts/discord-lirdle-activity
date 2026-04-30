@@ -37,6 +37,13 @@ function encryptState(data) {
   return iv.toString('hex') + ':' + encrypted.toString('hex');
 }
 
+/**
+ * Decrypt AES-256-CBC encrypted state. Returns null on failure instead of
+ * silently returning [] — callers must handle null explicitly so a decryption
+ * failure never silently resets the accumulated changes array.
+ * @param {string} text - IV-prefixed hex-encoded ciphertext ("iv:ciphertext")
+ * @returns {Array|null} Decrypted changes array, or null if decryption failed
+ */
 function decryptState(text) {
   try {
     const textParts = text.split(':');
@@ -48,7 +55,7 @@ function decryptState(text) {
     return JSON.parse(decrypted.toString());
   } catch (error) {
     console.error('[apps/web/index.js] Error decrypting state:', error);
-    return []; // Return empty state on decryption failure
+    return null;
   }
 }
 
@@ -77,13 +84,46 @@ app.post('/api/guess', async (req, res) => {
     const trueScores = evaluateTrueScore(targetWord, guessString);
     const guessedIt = guessString === targetWord;
 
-    let parsedChanges = [];
+    // Resolve the accumulated changes array from the client-sent encrypted state.
+    // decryptState returns null on failure — never []. This distinction matters:
+    // silently falling back to [] would reset the lie history mid-game, causing
+    // the lie markers shown on win to be indexed to the wrong rows (off-by-one).
+    // On failure we fall back to the last session saved in the DB, which always
+    // includes the encryptedChanges as part of the guesses blob. If both fail
+    // we return 500 so the client surfaces the error rather than silently
+    // continuing with a corrupted state.
+    let parsedChanges = null;
     if (encryptedChanges) {
       parsedChanges = decryptState(encryptedChanges);
     } else if (typeof changes === 'string') {
       parsedChanges = decryptState(changes);
     } else if (Array.isArray(changes)) {
       parsedChanges = changes;
+    }
+
+    if (parsedChanges === null) {
+      const today = new Date().toISOString().split('T')[0];
+      const storedSession = await db.session.findUnique({
+        where: { userId_date: { userId, date: today } },
+      });
+      if (storedSession?.guesses) {
+        try {
+          const storedState = JSON.parse(storedSession.guesses);
+          if (storedState?.encryptedChanges) {
+            parsedChanges = decryptState(storedState.encryptedChanges);
+          }
+        } catch {
+          // Stored guesses blob is malformed — fall through to error below
+        }
+      }
+    }
+
+    if (parsedChanges === null) {
+      clog(
+        console.error,
+        `[apps/web/index.js] Could not recover changes state for user ${userId} — returning error`,
+      );
+      return res.status(500).json({ error: 'Could not recover game state. Please reload.' });
     }
     let finalScores = [...trueScores];
     let newChanges = [...parsedChanges];
