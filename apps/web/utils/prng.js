@@ -22,12 +22,12 @@ export function mulberry32(a) {
 }
 
 /**
- * Generates a unique, non-repeating target word for a specific user.
+ * Generates a unique, non-repeating target word for a specific user on a specific date.
  * @param {string} userSeed - The UUID seed from the database User model
- * @param {number} gamesPlayed - The number of games the user has completed
+ * @param {number} dateNumber - The date number (YYYYMMDD format relative to Lirdle epoch)
  * @returns {string} The target word
  */
-export function getUniqueWordForUser(userSeed, gamesPlayed) {
+export function getUniqueWordForUser(userSeed, dateNumber) {
   const seedGen = xmur3(userSeed);
   const rand = mulberry32(seedGen());
   const indices = Array.from({ length: WORDS.length }, (_, i) => i);
@@ -37,7 +37,7 @@ export function getUniqueWordForUser(userSeed, gamesPlayed) {
     [indices[i], indices[j]] = [indices[j], indices[i]];
   }
 
-  const safeIndex = gamesPlayed % WORDS.length;
+  const safeIndex = dateNumber % WORDS.length;
   return WORDS[indices[safeIndex]];
 }
 

@@ -7,7 +7,7 @@ import { promises as fs } from 'fs';
 import crypto from 'crypto';
 import { clog } from '@lirdle/logger';
 import { getUniqueWordForUser, evaluateTrueScore, xmur3, mulberry32 } from './utils/prng.js';
-import { lie } from './public/numbers.js';
+import { lie, getDateNumber } from './public/numbers.js';
 import { getLeaderboard, getUserStats } from '@lirdle/db/leaderboard.js';
 
 dotenvFlow.config({ path: '../../' });
@@ -73,7 +73,7 @@ app.post('/api/guess', async (req, res) => {
       });
     }
 
-    const targetWord = getUniqueWordForUser(user.seed, user.gamesPlayed);
+    const targetWord = getUniqueWordForUser(user.seed, getDateNumber());
     const trueScores = evaluateTrueScore(targetWord, guessString);
     const guessedIt = guessString === targetWord;
 
