@@ -16,6 +16,7 @@ export default function View() {
   this.wordIsInvalid = false;
   this.wordIsNonTarget = false;
   this.gameFinished = false;
+  this.isProcessingInput = false;
 }
 
 /**
@@ -586,6 +587,11 @@ View.prototype = {
    * @param {KeyboardEvent} e - Keyboard event
    */
   keyHandler(e) {
+    // Ignore all inputs while processing to prevent desync
+    if (this.isProcessingInput) {
+      return;
+    }
+
     // console.log('>> keyup');
     const pressedKey = String(e.key);
     if (pressedKey === 'Backspace' || pressedKey === 'Del') {
@@ -605,7 +611,10 @@ View.prototype = {
         return;
       }
       this.changeNonTargetWordState(false);
-      this.model.checkGuess();
+      this.isProcessingInput = true;
+      this.model.checkGuess().finally(() => {
+        this.isProcessingInput = false;
+      });
     } else if (pressedKey.match(/^[a-z]$/i)) {
       if (this.model.nextLetterPosition < 5) {
         this.model.insertLetter(pressedKey.toLowerCase());
