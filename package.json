@@ -18,6 +18,10 @@
   "author": "anato",
   "license": "MIT",
   "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@hono/node-server": "^1.19.14",
+    "uuid": "^14.0.0"
+  },
   "devDependencies": {
     "@eslint/compat": "^2.0.5",
     "@eslint/js": "^10.0.1",
