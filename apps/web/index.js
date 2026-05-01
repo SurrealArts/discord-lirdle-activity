@@ -15,6 +15,7 @@ import leaderboardRoutes from './routes/leaderboard.js';
 import teaseRoutes from './routes/tease.js';
 import statsRoutes from './routes/stats.js';
 import usageRoutes from './routes/usage.js';
+import userRoutes from './routes/user.js';
 
 dotenvFlow.config({ path: '../../' });
 
@@ -37,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 authRoutes.setDependencies({ CLIENT_ID, CLIENT_SECRET });
 guessRoutes.setDependencies({ db, crypto, CLIENT_SECRET });
 sessionRoutes.setDependencies({ db, crypto });
-configRoutes.setDependencies({ CLIENT_ID });
+configRoutes.setDependencies({ CLIENT_ID, db });
 // leaderboardRoutes doesn't need additional setup as it uses imported modules directly
 teaseRoutes.setDependencies({ __dirname });
 statsRoutes.setDependencies({ __dirname });
@@ -52,6 +53,7 @@ app.use('/', leaderboardRoutes);
 app.use('/', usageRoutes);
 app.use('/', teaseRoutes);
 app.use('/', statsRoutes);
+app.use('/', userRoutes);
 app.use('/', usageRoutes);
 
 app.listen(PORT, () => {
