@@ -751,7 +751,7 @@ View.prototype = {
    * @returns {string} HTML-safe text
    */
   sanitize(txt) {
-    return txt.trim().replace('&', '&amp;').replace('<', '&lt;').replace(/\r?\n/, '<br />');
+    return txt.trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\r?\n/, '<br />');
   },
   /**
    * Toggle show/hide CSS classes on a DOM node.

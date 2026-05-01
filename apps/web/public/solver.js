@@ -50,7 +50,12 @@ export function updateSolver(guesses, scores, solver, finished = false) {
  */
 export function evalPossibleWords(guess, scores, currentWordList) {
   const possibleWords = {};
-  const lim = currentWordList.length;
+  // Guard against loop bound injection by ensuring currentWordList is an array and limiting its size
+  if (!Array.isArray(currentWordList)) {
+    return [];
+  }
+  // Limit array size to prevent DoS attacks via excessively large arrays
+  const lim = Math.min(currentWordList.length, 13000); // Reasonable limit for word list
   if (lim === 1 && currentWordList[0] === guess) {
     // This is needed when restarting so it doesn't reject 2-2-2-2-2 on the final word
     return [guess];
