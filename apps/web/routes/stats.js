@@ -1,8 +1,15 @@
 import express from 'express';
 import path from 'path';
 import { promises as fs } from 'fs';
+import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  message: 'Too many requests, please try again later.',
+});
 
 // These will be set by the main app
 let __dirname;
@@ -19,7 +26,7 @@ router.setDependencies = function(deps) {
  * GET /stats/:fileName
  * Serve stats files
  */
-router.get('/stats/:fileName', async (req, res) => {
+router.get('/stats/:fileName', limiter, async (req, res) => {
   const fileName = req.params.fileName;
   if (!/^day\d{4}\.json$/.test(fileName)) {
     return res.status(400).json({ error: 'Invalid request' });
