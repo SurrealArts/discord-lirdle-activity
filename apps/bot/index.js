@@ -2,11 +2,7 @@ import '../../config.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { readdirSync, readdir } from 'fs';
-import {
-  ActivityType,
-  Client,
-  GatewayIntentBits,
-} from 'discord.js';
+import { ActivityType, Client, GatewayIntentBits } from 'discord.js';
 import express from 'express';
 
 import { clog } from '@lirdle/logger';
@@ -31,9 +27,7 @@ const cmds = [];
 let createDashboardFn = null;
 
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-  ],
+  intents: [GatewayIntentBits.Guilds],
 });
 
 client.once('clientReady', async () => {

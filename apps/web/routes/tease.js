@@ -18,7 +18,7 @@ let __dirname;
  * Set dependencies for this route
  * @param {Object} deps - Dependencies object
  */
-router.setDependencies = function(deps) {
+router.setDependencies = function (deps) {
   __dirname = deps.__dirname;
 };
 

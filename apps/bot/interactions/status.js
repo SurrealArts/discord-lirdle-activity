@@ -1,4 +1,11 @@
-import { ActionRowBuilder, EmbedBuilder, AttachmentBuilder, MessageFlags, ButtonBuilder, ButtonStyle } from 'discord.js';
+import {
+  ActionRowBuilder,
+  EmbedBuilder,
+  AttachmentBuilder,
+  MessageFlags,
+  ButtonBuilder,
+  ButtonStyle,
+} from 'discord.js';
 import { clog } from '@lirdle/logger';
 import { generateLirdleImage } from '../utils/imageGenerator.js';
 

@@ -11,7 +11,7 @@ let crypto;
  * Set dependencies for this route
  * @param {Object} deps - Dependencies object
  */
-router.setDependencies = function(deps) {
+router.setDependencies = function (deps) {
   db = deps.db;
   crypto = deps.crypto;
 };

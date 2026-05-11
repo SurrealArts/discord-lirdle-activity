@@ -26,10 +26,14 @@ function buildLeaderboardText(entries, usernameMap) {
     if (e.wins > 0) {
       const avgTries = Number.isInteger(e.avgTries) ? e.avgTries : e.avgTries.toFixed(1);
       const winRate = e.gamesPlayed > 0 ? Math.round((e.wins / e.gamesPlayed) * 100) : 0;
-      lines.push(`${medal} **${username}** — ${e.wins} win${e.wins !== 1 ? 's' : ''} · avg ${avgTries} tries · ${winRate}% win rate`);
+      lines.push(
+        `${medal} **${username}** — ${e.wins} win${e.wins !== 1 ? 's' : ''} · avg ${avgTries} tries · ${winRate}% win rate`,
+      );
     } else {
       const bestTries = e.bestTries > 0 ? `${e.bestTries} tries` : '-';
-      lines.push(`${medal} **${username}** — ${e.gamesPlayed} game${e.gamesPlayed !== 1 ? 's' : ''} · best ${bestTries}`);
+      lines.push(
+        `${medal} **${username}** — ${e.gamesPlayed} game${e.gamesPlayed !== 1 ? 's' : ''} · best ${bestTries}`,
+      );
     }
   }
 
@@ -48,7 +52,8 @@ export async function runDailyLeaderboard(client, targetDateOverride = null) {
   clog(console.log, '[apps/bot/utils/cronJobs.js] Running Daily Leaderboard...');
 
   const { db } = await import('@lirdle/db');
-  const targetDate = targetDateOverride || new Date(Date.now() - 3600000).toISOString().split('T')[0];
+  const targetDate =
+    targetDateOverride || new Date(Date.now() - 3600000).toISOString().split('T')[0];
 
   const configs = await db.guildConfig.findMany();
 
@@ -196,8 +201,18 @@ export async function runMonthlyLeaderboard(client, yearMonthOverride = null) {
 
       const [year, month] = yearMonth.split('-');
       const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December',
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
       ];
 
       const title = `📊 Lirdle Monthly Leaderboard — ${monthNames[parseInt(month, 10) - 1]} ${year}`;

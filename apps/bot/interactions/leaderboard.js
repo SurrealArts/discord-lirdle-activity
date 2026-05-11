@@ -22,8 +22,11 @@ export const run = async (client, interaction) => {
     const entries = await getLeaderboard(guildId, period);
 
     if (entries.length === 0) {
-      const periodLabel = period === 'daily' ? 'Daily' : period === 'monthly' ? 'Monthly' : 'All-Time';
-      return await interaction.editReply({ content: `📊 Lirdle ${periodLabel} Leaderboard\n\nNo games played yet for this period!\nUse /lirdle to start playing` });
+      const periodLabel =
+        period === 'daily' ? 'Daily' : period === 'monthly' ? 'Monthly' : 'All-Time';
+      return await interaction.editReply({
+        content: `📊 Lirdle ${periodLabel} Leaderboard\n\nNo games played yet for this period!\nUse /lirdle to start playing`,
+      });
     }
 
     const memberMap = new Map();
@@ -56,7 +59,9 @@ export const run = async (client, interaction) => {
           lines.push(`${medal} ${name} — ${avgTries} tries ✅`);
         } else {
           const winRate = e.gamesPlayed > 0 ? Math.round((e.wins / e.gamesPlayed) * 100) : 0;
-          lines.push(`${medal} ${name} — ${e.wins} win${e.wins !== 1 ? 's' : ''} · avg ${avgTries} tries · ${winRate}% win rate`);
+          lines.push(
+            `${medal} ${name} — ${e.wins} win${e.wins !== 1 ? 's' : ''} · avg ${avgTries} tries · ${winRate}% win rate`,
+          );
         }
       } else {
         if (period === 'daily') {
@@ -64,7 +69,9 @@ export const run = async (client, interaction) => {
           lines.push(`${medal} ${name} — ${tries} tries (unfinished)`);
         } else {
           const bestTries = e.bestTries > 0 ? `${e.bestTries} tries` : '-';
-          lines.push(`${medal} ${name} — ${e.gamesPlayed} game${e.gamesPlayed !== 1 ? 's' : ''} · best ${bestTries}`);
+          lines.push(
+            `${medal} ${name} — ${e.gamesPlayed} game${e.gamesPlayed !== 1 ? 's' : ''} · best ${bestTries}`,
+          );
         }
       }
     }

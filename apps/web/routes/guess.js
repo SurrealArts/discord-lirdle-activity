@@ -15,17 +15,13 @@ let ENCRYPTION_KEY;
  * Set dependencies for this route
  * @param {Object} deps - Dependencies object
  */
-router.setDependencies = function(deps) {
+router.setDependencies = function (deps) {
   db = deps.db;
   crypto = deps.crypto;
   CLIENT_SECRET = deps.CLIENT_SECRET;
-  
+
   // Initialize encryption key after crypto is available
-  ENCRYPTION_KEY = crypto
-    .createHash('sha256')
-    .update(CLIENT_SECRET)
-    .digest('base64')
-    .substr(0, 32);
+  ENCRYPTION_KEY = crypto.createHash('sha256').update(CLIENT_SECRET).digest('base64').substr(0, 32);
 };
 const IV_LENGTH = 16;
 

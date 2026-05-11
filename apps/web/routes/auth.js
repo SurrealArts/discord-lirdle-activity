@@ -11,7 +11,7 @@ let CLIENT_SECRET;
  * Set dependencies for this route
  * @param {Object} deps - Dependencies object
  */
-router.setDependencies = function(deps) {
+router.setDependencies = function (deps) {
   CLIENT_ID = deps.CLIENT_ID;
   CLIENT_SECRET = deps.CLIENT_SECRET;
 };

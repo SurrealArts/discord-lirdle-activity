@@ -35,6 +35,9 @@ export const data = new SlashCommandBuilder()
       .setName('leaderboard_ping')
       .setDescription('Enable or disable @mentioning players in leaderboard posts')
       .addBooleanOption((opt) =>
-        opt.setName('enable').setDescription('True to mention, False for bold names').setRequired(true),
+        opt
+          .setName('enable')
+          .setDescription('True to mention, False for bold names')
+          .setRequired(true),
       ),
   );

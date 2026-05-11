@@ -14,8 +14,12 @@ const type = args[0];
 
 if (!type || !['daily', 'monthly'].includes(type)) {
   console.log('Usage: node scripts/run-cron.js <daily|monthly> [date]');
-  console.log('  daily [YYYY-MM-DD]  - Run daily leaderboard for specified date (default: yesterday)');
-  console.log('  monthly [YYYY-MM]   - Run monthly leaderboard for specified month (default: last month)');
+  console.log(
+    '  daily [YYYY-MM-DD]  - Run daily leaderboard for specified date (default: yesterday)',
+  );
+  console.log(
+    '  monthly [YYYY-MM]   - Run monthly leaderboard for specified month (default: last month)',
+  );
   process.exit(1);
 }
 

@@ -47,7 +47,7 @@ async function markDashboardOutdated(client, channelId) {
       .setFooter({ text: 'OUTDATED • Scroll down for updated dashboard' });
 
     const editPayload = {
-      embeds: [outdatedEmbed]
+      embeds: [outdatedEmbed],
     };
 
     if (lastAttachment) {
@@ -85,10 +85,10 @@ async function markDashboardDayEnded(client, channelId) {
 
     const endedEmbed = EmbedBuilder.from(currentEmbed)
       .setColor('#6b7280')
-      .setFooter({ text: 'DAY ENDED • Check out today\'s leaderboard' });
-    
+      .setFooter({ text: "DAY ENDED • Check out today's leaderboard" });
+
     const editPayload = {
-      embeds: [endedEmbed]
+      embeds: [endedEmbed],
     };
 
     if (lastAttachment) {
@@ -167,7 +167,10 @@ async function createDashboard(client, guildId, channelId) {
           try {
             const channel = await client.channels.fetch(channelId);
             if (channel) {
-              const message = await channel.messages.fetch({ message: data.messageId, force: true });
+              const message = await channel.messages.fetch({
+                message: data.messageId,
+                force: true,
+              });
               if (message) {
                 const currentEmbed = message.embeds[0];
                 if (!currentEmbed) return;
@@ -176,7 +179,7 @@ async function createDashboard(client, guildId, channelId) {
 
                 const endedEmbed = EmbedBuilder.from(currentEmbed)
                   .setColor('#6b7280')
-                  .setFooter({ text: 'DAY ENDED • Check out today\'s leaderboard' });
+                  .setFooter({ text: "DAY ENDED • Check out today's leaderboard" });
 
                 const editPayload = { embeds: [endedEmbed] };
 
@@ -188,7 +191,9 @@ async function createDashboard(client, guildId, channelId) {
                   const attachedImage = message.attachments.first();
                   if (attachedImage) {
                     endedEmbed.setImage(`attachment://${attachedImage.name}`);
-                    editPayload.attachments = [{ id: attachedImage.id, filename: attachedImage.name }];
+                    editPayload.attachments = [
+                      { id: attachedImage.id, filename: attachedImage.name },
+                    ];
                   }
                 }
 
@@ -244,9 +249,7 @@ async function createDashboard(client, guildId, channelId) {
         const state = JSON.parse(session.guesses || '{}');
         return {
           username: member ? member.user.username : 'Unknown',
-          avatarUrl: member
-            ? member.user.displayAvatarURL({ extension: 'png', size: 128 })
-            : null,
+          avatarUrl: member ? member.user.displayAvatarURL({ extension: 'png', size: 128 }) : null,
           guessWords: Array.isArray(state.guessWords) ? state.guessWords : [],
           perceivedScores: Array.isArray(state.scores) ? state.scores : [],
           changes: Array.isArray(state.changes) ? state.changes : [],
@@ -267,7 +270,7 @@ async function createDashboard(client, guildId, channelId) {
       await dashboardMessage.edit({
         embeds: [liveEmbed],
         files: [attachment],
-        attachments: []
+        attachments: [],
       });
     } catch (err) {
       clog(console.error, '[apps/bot/interactions/lirdle.js][Poll Loop Error]', err);
