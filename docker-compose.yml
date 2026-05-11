@@ -8,9 +8,9 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=file:/app/packages/db/dev.db
+      - DATABASE_URL=file:/app/packages/db/data/dev.db
     volumes:
-      - lirdle_sqlite_data:/app/packages/db
+      - lirdle_sqlite_data:/app/packages/db/data
 
   bot:
     image: ghcr.io/surrealarts/discord-lirdle-activity:latest
@@ -23,9 +23,9 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=file:/app/packages/db/dev.db
+      - DATABASE_URL=file:/app/packages/db/data/dev.db
     volumes:
-      - lirdle_sqlite_data:/app/packages/db
+      - lirdle_sqlite_data:/app/packages/db/data
     depends_on:
       - web
 
