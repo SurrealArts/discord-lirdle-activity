@@ -27,7 +27,9 @@ CLIENT_SECRET=your_client_secret
 TOKEN=your_bot_token
 VERSION=1.0.0
 
-PORT=3000
+IS_DOCKER=true
+WEB_PORT=3000
+BOT_PORT=3001
 
 # Configure timezones for console output.
 LOG_WITH_TIME=true
@@ -80,7 +82,19 @@ If you are developing locally without Docker, follow these steps:
    pnpm --filter @lirdle/db exec prisma generate
    ```
 
-3. **Start Development Servers:**
+3. **Set `IS_DOCKER` in `.env` to `false`:**
+
+   ```env
+   # [...]
+   VERSION=1.0.0
+
+   IS_DOCKER=false
+   WEB_PORT=3000
+   BOT_PORT=3001
+   # [...]
+   ```
+
+4. **Start Development Servers:**
 
    ```bash
    # Terminal 1: Run the Tunnel (./apps/web)

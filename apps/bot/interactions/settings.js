@@ -31,7 +31,7 @@ export const run = async (client, interaction) => {
       await interaction.editReply({
         content: `✅ Monthly statistics have been **${enable ? 'enabled' : 'disabled'}**.`,
       });
-    } else if (subcommand === 'channel-default') {
+    } else if (subcommand === 'channel_default') {
       const channel = interaction.options.getChannel('channel');
       const leaderboardChannelId = channel ? channel.id : null;
 
@@ -46,6 +46,18 @@ export const run = async (client, interaction) => {
         : '✅ Automatic leaderboard channel has been cleared. The active channel will be used instead.';
 
       await interaction.editReply({ content: msg });
+    } else if (subcommand === 'leaderboard_ping') {
+      const enable = interaction.options.getBoolean('enable', true);
+
+      await db.guildConfig.upsert({
+        where: { guildId },
+        update: { leaderboardPing: enable },
+        create: { guildId, activeChannelId: '', leaderboardPing: enable },
+      });
+
+      await interaction.editReply({
+        content: `✅ Leaderboard @mentions have been **${enable ? 'enabled' : 'disabled'}**.`,
+      });
     } else {
       await interaction.editReply({ content: 'Unknown subcommand.' });
     }

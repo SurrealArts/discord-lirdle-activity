@@ -56,7 +56,11 @@ export function getWordNumber(dateNumber) {
 
 /** @returns {boolean} True if running on localhost (enables random word selection) */
 export function devMode() {
-  return location.hostname === 'localhost' || location.hostname === '127.0.0.1'; // && Math.random() < 0.00000001;
+  return false;
+  // if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+  //   return true;
+  // }
+  // return window.IS_DOCKER !== 'true';
 }
 
 /**

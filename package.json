@@ -12,7 +12,9 @@
     "force-reset-db": "pnpm --filter @lirdle/db exec prisma db push --force-reset && pnpm --filter @lirdle/db exec prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier-write": "prettier --write .",
-    "lint": "prettier --check . && eslint ."
+    "lint": "prettier --check . && eslint .",
+    "cron:daily-lb": "pnpm --filter @lirdle/bot run cron:daily",
+    "cron:monthly-lb": "pnpm --filter @lirdle/bot run cron:monthly"
   },
   "keywords": [],
   "author": "anato",
@@ -20,6 +22,7 @@
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@hono/node-server": "^1.19.14",
+    "dotenv-flow": "^4.1.0",
     "uuid": "^14.0.0"
   },
   "devDependencies": {

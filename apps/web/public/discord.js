@@ -91,6 +91,21 @@ async function setupDiscord() {
 
     window.DISCORD_USER_ID = discordUser.id;
 
+    if (discordSdk.channelId && discordSdk.guildId) {
+      try {
+        await fetch('/api/activity-launch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            guildId: discordSdk.guildId,
+            channelId: discordSdk.channelId,
+          }),
+        });
+      } catch {
+        // Ignore errors - bot may not be running
+      }
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const syncRes = await fetch(`/api/load-session?userId=${discordUser.id}&date=${today}`);
 

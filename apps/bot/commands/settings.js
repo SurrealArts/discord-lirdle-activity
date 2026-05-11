@@ -21,12 +21,20 @@ export const data = new SlashCommandBuilder()
   )
   .addSubcommand((sub) =>
     sub
-      .setName('channel-default')
+      .setName('channel_default')
       .setDescription('Set the default channel for automatic leaderboard messages')
       .addChannelOption((opt) =>
         opt
           .setName('channel')
           .setDescription('The channel to post leaderboard messages to (omit to clear)')
           .setRequired(false),
+      ),
+  )
+  .addSubcommand((sub) =>
+    sub
+      .setName('leaderboard_ping')
+      .setDescription('Enable or disable @mentioning players in leaderboard posts')
+      .addBooleanOption((opt) =>
+        opt.setName('enable').setDescription('True to mention, False for bold names').setRequired(true),
       ),
   );

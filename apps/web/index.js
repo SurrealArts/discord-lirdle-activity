@@ -1,12 +1,11 @@
+import '../../config.js';
 import express from 'express';
 import cors from 'cors';
-import dotenvFlow from 'dotenv-flow';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import { clog } from '@lirdle/logger';
 
-// Import route modules
 import authRoutes from './routes/auth.js';
 import guessRoutes from './routes/guess.js';
 import sessionRoutes from './routes/session.js';
@@ -16,35 +15,32 @@ import teaseRoutes from './routes/tease.js';
 import statsRoutes from './routes/stats.js';
 import usageRoutes from './routes/usage.js';
 import userRoutes from './routes/user.js';
-
-dotenvFlow.config({ path: '../../' });
+import activityLaunchRoutes from './routes/activity-launch.js';
 
 const { db } = await import('@lirdle/db');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const CLIENT_ID = process.env.CLIENT_ID.trim();
+const PORT = process.env.WEB_PORT || 3000;
+const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+
+const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.set('trust proxy', 1);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Set up route dependencies
 authRoutes.setDependencies({ CLIENT_ID, CLIENT_SECRET });
 guessRoutes.setDependencies({ db, crypto, CLIENT_SECRET });
 sessionRoutes.setDependencies({ db, crypto });
 configRoutes.setDependencies({ CLIENT_ID, db });
-// leaderboardRoutes doesn't need additional setup as it uses imported modules directly
 teaseRoutes.setDependencies({ __dirname });
 statsRoutes.setDependencies({ __dirname });
-// usageRoutes doesn't need additional setup
 
-// API routes
 app.use('/', authRoutes);
 app.use('/', guessRoutes);
 app.use('/', sessionRoutes);
@@ -54,7 +50,7 @@ app.use('/', usageRoutes);
 app.use('/', teaseRoutes);
 app.use('/', statsRoutes);
 app.use('/', userRoutes);
-app.use('/', usageRoutes);
+app.use('/', activityLaunchRoutes);
 
 app.listen(PORT, () => {
   clog(

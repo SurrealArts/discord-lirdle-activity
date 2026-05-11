@@ -197,9 +197,7 @@ export async function generateGridDashboard(players, title) {
 
     // Player Avatar
     try {
-      const avatar = await loadImage(
-        player.avatarUrl || 'https://cdn.discordapp.com/embed/avatars/0.png',
-      );
+      const avatar = await loadImage(player.avatarUrl);
       const aSize = 48;
       const aY = 20;
 
@@ -218,6 +216,24 @@ export async function generateGridDashboard(players, title) {
       ctx.stroke();
     } catch (e) {
       console.error('Avatar error', e);
+
+      const avatar = await loadImage('https://cdn.discordapp.com/embed/avatars/0.png');
+      const aSize = 48;
+      const aY = 20;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(colCenter, aY + aSize / 2, aSize / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(avatar, colCenter - aSize / 2, aY, aSize, aSize);
+      ctx.restore();
+
+      ctx.beginPath();
+      ctx.arc(colCenter, aY + aSize / 2, aSize / 2, 0, Math.PI * 2);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = player.won ? COLORS.GREEN : '#555555';
+      ctx.stroke();
     }
 
     // Player Username

@@ -1,4 +1,4 @@
-import { EmbedBuilder, AttachmentBuilder, MessageFlags } from 'discord.js';
+import { ActionRowBuilder, EmbedBuilder, AttachmentBuilder, MessageFlags, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { clog } from '@lirdle/logger';
 import { generateLirdleImage } from '../utils/imageGenerator.js';
 
@@ -71,9 +71,16 @@ export const run = async (client, interaction) => {
       .setImage('attachment://lirdle-status.png')
       .setFooter({ text: 'Use /lirdle to continue playing' });
 
+    const playButton = new ButtonBuilder()
+      .setCustomId('play_now')
+      .setLabel('Play Now!')
+      .setStyle(ButtonStyle.Primary);
+    const row = new ActionRowBuilder().addComponents(playButton);
+
     await interaction.editReply({
       embeds: [embed],
       files: [attachment],
+      components: [row],
       flags: MessageFlags.Ephemeral,
     });
   } catch (error) {

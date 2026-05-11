@@ -1,4 +1,4 @@
-import { clientid, token } from './config.js';
+import '../../config.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { readdirSync, readdir } from 'fs';
@@ -6,8 +6,6 @@ import {
   ActivityType,
   Client,
   GatewayIntentBits,
-  // Collection,
-  // MessageFlags
 } from 'discord.js';
 import express from 'express';
 
@@ -15,36 +13,54 @@ import { clog } from '@lirdle/logger';
 import { startCronJobs } from './utils/cronJobs.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.BOT_PORT || 3001;
+const CLIENT_ID = process.env.CLIENT_ID;
+const TOKEN = process.env.TOKEN;
 
 app.use(express.static('public'));
+app.use(express.json());
+
+export { app };
 
 app.listen(PORT, () => {
-  clog(console.log, `[apps/bot/index.js] Lirdle Web App listening on port ${PORT}`);
+  clog(console.log, `[apps/bot/index.js] Lirdle bot listening on port ${PORT}`);
 });
 
 const cmds = [];
 
+let createDashboardFn = null;
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    // GatewayIntentBits.GuildMessages,
-    // GatewayIntentBits.MessageContent,
-    // GatewayIntentBits.GuildMembers,
-    // GatewayIntentBits.GuildMessageReactions,
   ],
 });
 
 client.once('clientReady', async () => {
   clog(console.log, `[apps/bot/index.js] Logged in as ${client.user.tag}!`);
 
+  const lirdle = await import('./interactions/lirdle.js');
+  createDashboardFn = lirdle.createDashboard;
+
+  app.post('/api/activity-launch', async (req, res) => {
+    try {
+      const { guildId, channelId } = req.body;
+      if (!guildId || !channelId) {
+        return res.status(400).json({ error: 'Missing guildId or channelId' });
+      }
+      if (!createDashboardFn) {
+        return res.status(500).json({ error: 'Dashboard not initialized' });
+      }
+      await createDashboardFn(client, guildId, channelId);
+      res.json({ success: true });
+    } catch (err) {
+      clog(console.error, '[apps/bot/index.js] /api/activity-launch error:', err);
+      res.status(500).json({ error: 'Internal error' });
+    }
+  });
+
   const commands = [];
 
-  /**
-   * Recursively find all .js files in a command directory.
-   * @param {string} dir - Directory path to search
-   * @returns {string[]} Array of file paths
-   */
   const getCommandFiles = (dir) => {
     const entries = readdirSync(dir, { withFileTypes: true });
     const files = [];
@@ -67,13 +83,13 @@ client.once('clientReady', async () => {
 
   const rest = new REST({
     version: '10',
-  }).setToken(token);
+  }).setToken(TOKEN);
 
   (async () => {
     try {
       clog(console.log, '[apps/bot/index.js] Started refreshing application (/) commands.');
 
-      const existingCommands = await rest.get(Routes.applicationCommands(clientid));
+      const existingCommands = await rest.get(Routes.applicationCommands(CLIENT_ID));
       for (const command of existingCommands) {
         cmds.push(command);
         clog(console.log, `[apps/bot/index.js] Pushed '${command.name}'.`);
@@ -83,7 +99,7 @@ client.once('clientReady', async () => {
         (existing) => !commands.some((c) => c.name === existing.name),
       );
 
-      await rest.put(Routes.applicationCommands(clientid), {
+      await rest.put(Routes.applicationCommands(CLIENT_ID), {
         body: [...commands, ...preservedCommands],
       });
 
@@ -126,6 +142,6 @@ readdir('./events/', (err, files) => {
   });
 });
 
-client.login(token);
+client.login(TOKEN);
 
 export default { cmds };

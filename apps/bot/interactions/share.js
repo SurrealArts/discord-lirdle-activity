@@ -1,4 +1,4 @@
-import { EmbedBuilder, AttachmentBuilder } from 'discord.js';
+import { ActionRowBuilder, EmbedBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { clog } from '@lirdle/logger';
 import { generateLirdleImage } from '../utils/imageGenerator.js';
 
@@ -27,12 +27,18 @@ export const run = async (client, interaction) => {
     });
 
     if (!session || !session.won) {
+      const playButton = new ButtonBuilder()
+        .setCustomId('play_now')
+        .setLabel('Play Now!')
+        .setStyle(ButtonStyle.Primary);
+      const row = new ActionRowBuilder().addComponents(playButton);
+
       const embed = new EmbedBuilder()
         .setColor('#f97316')
         .setTitle('Game Not Finished')
         .setDescription('You must finish your game today before you can share your results!')
         .setFooter({ text: 'Use /lirdle to finish playing' });
-      return await interaction.editReply({ embeds: [embed] });
+      return await interaction.editReply({ embeds: [embed], components: [row] });
     }
 
     if (guildId) {
@@ -62,7 +68,13 @@ export const run = async (client, interaction) => {
       )
       .setImage('attachment://lirdle-share.png');
 
-    await interaction.editReply({ embeds: [embed], files: [attachment] });
+    const playButton = new ButtonBuilder()
+      .setCustomId('play_now')
+      .setLabel('Play Now!')
+      .setStyle(ButtonStyle.Primary);
+    const row = new ActionRowBuilder().addComponents(playButton);
+
+    await interaction.editReply({ embeds: [embed], files: [attachment], components: [row] });
   } catch (error) {
     clog(console.error, '[apps/bot/interactions/share.js] Error:', error);
     await interaction.editReply({ content: 'Failed to share result.' });
