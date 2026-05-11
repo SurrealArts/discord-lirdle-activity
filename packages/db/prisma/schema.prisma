@@ -38,7 +38,7 @@ model GuildConfig {
   activeChannelId      String
   leaderboardChannelId String?
   monthlyStatsEnabled  Boolean  @default(false)
-  leaderboardPing      Boolean  @default(false)
+  // leaderboardPing      Boolean  @default(false)
 }
 
 model Session {
