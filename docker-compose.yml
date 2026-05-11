@@ -2,15 +2,15 @@ services:
   web:
     image: ghcr.io/surrealarts/discord-lirdle-activity:latest
     restart: always
-    command: pnpm run dev:web
+    command: pnpm -w run dev:web
     ports:
       - '3000:3000'
     env_file:
       - .env
     environment:
-      - DATABASE_URL=file:/app/packages/db/data/dev.db
+      - DATABASE_URL=file:/app/data/dev.db
     volumes:
-      - lirdle_sqlite_data:/app/packages/db/data
+      - lirdle_sqlite_data:/app/data
 
   bot:
     image: ghcr.io/surrealarts/discord-lirdle-activity:latest
@@ -23,9 +23,9 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=file:/app/packages/db/data/dev.db
+      - DATABASE_URL=file:/app/data/dev.db
     volumes:
-      - lirdle_sqlite_data:/app/packages/db/data
+      - lirdle_sqlite_data:/app/data
     depends_on:
       - web
 
