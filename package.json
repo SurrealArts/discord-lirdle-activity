@@ -19,7 +19,7 @@
   "keywords": [],
   "author": "anato",
   "license": "MIT",
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@11.5.3",
   "dependencies": {
     "@hono/node-server": "^1.19.14",
     "dotenv-flow": "^4.1.0",

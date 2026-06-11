@@ -2,7 +2,7 @@
 
 # Lirdle: Discord Activity & Bot
 
-A full-stack Discord application bringing the "One Lie Per Line" word game natively to Discord voice channels. This project is structured as a **pnpm v10 monorepo** and includes the interactive Activity frontend, an Express backend, a Discord.js utility bot, and a persistent SQLite database. I dedicate this to Eric Promislow for the original [lirdle game](https://lirdle.com)! (His [github repo](https://github.com/ericpromislow/lirdle))
+A full-stack Discord application bringing the "One Lie Per Line" word game natively to Discord voice channels. This project is structured as a **pnpm v11 monorepo** and includes the interactive Activity frontend, an Express backend, a Discord.js utility bot, and a persistent SQLite database. I dedicate this to Eric Promislow for the original [lirdle game](https://lirdle.com)! (His [github repo](https://github.com/ericpromislow/lirdle))
 
 ## Features
 
