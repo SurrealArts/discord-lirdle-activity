@@ -19,10 +19,10 @@
     "@lirdle/db": "workspace:*",
     "@lirdle/logger": "workspace:*",
     "canvas": "^3.2.3",
-    "discord-api-types": "^0.38.48",
+    "discord-api-types": "^0.38.49",
     "discord.js": "^14.26.4",
     "dotenv-flow": "^4.1.0",
     "express": "^5.2.1",
-    "node-cron": "^4.2.1"
+    "node-cron": "^4.5.0"
   }
 }

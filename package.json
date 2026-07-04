@@ -23,7 +23,7 @@
   "dependencies": {
     "@hono/node-server": "^1.19.14",
     "dotenv-flow": "^4.1.0",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
