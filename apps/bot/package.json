@@ -23,6 +23,6 @@
     "discord.js": "^14.26.4",
     "dotenv-flow": "^4.1.0",
     "express": "^5.2.1",
-    "node-cron": "^4.5.0"
+    "node-cron": "^4.6.0"
   }
 }

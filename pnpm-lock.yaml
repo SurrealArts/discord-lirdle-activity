@@ -64,8 +64,8 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1
       node-cron:
-        specifier: ^4.5.0
-        version: 4.5.0
+        specifier: ^4.6.0
+        version: 4.6.0
 
   apps/web:
     dependencies:
@@ -1012,8 +1012,8 @@ packages:
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
 
-  node-cron@4.5.0:
-    resolution: {integrity: sha512-4Trh+kjvbXokyJkwQumvD5YAgeJfgHLR/sKyu71uSmxfCR5QMO1hldpvmFZOICN5pLgNY+J5Y8+ar3XKo5/4tQ==}
+  node-cron@4.6.0:
+    resolution: {integrity: sha512-Si/bzYiKRHOB8/a99T2+SDGN582ONDMSTlJr5oCkT6GtnqPjZ2s10eoQRYkW9ZHwjVxONL+W8Fb+qR0AHMQsdg==}
     engines: {node: '>=20'}
 
   object-assign@4.1.1:
@@ -2258,7 +2258,7 @@ snapshots:
 
   node-addon-api@7.1.1: {}
 
-  node-cron@4.5.0: {}
+  node-cron@4.6.0: {}
 
   object-assign@4.1.1: {}
 
