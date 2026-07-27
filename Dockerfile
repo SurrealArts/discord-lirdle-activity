@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 	librsvg2-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
 
 WORKDIR /app
 
@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y --fix-missing \
 	librsvg2-2 \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
 WORKDIR /app
 
 COPY --from=base /app /app

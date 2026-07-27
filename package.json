@@ -19,18 +19,18 @@
   "keywords": [],
   "author": "anato",
   "license": "MIT",
-  "packageManager": "pnpm@11.5.3",
+  "packageManager": "pnpm@11.17.0",
   "dependencies": {
-    "@hono/node-server": "^2.0.10",
+    "@hono/node-server": "^2.0.12",
     "dotenv-flow": "^4.1.0",
     "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.6.0",
+    "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.7.0",
-    "prettier": "^3.9.1"
+    "prettier": "^3.9.6"
   }
 }

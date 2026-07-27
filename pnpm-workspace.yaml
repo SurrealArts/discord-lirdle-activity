@@ -7,3 +7,7 @@ allowBuilds:
   canvas: true
   cloudflared: true
   prisma: true
+overrides:
+  hono: '>=4.12.27'
+  find-my-way: '>=9.7.0'
+  valibot: '>=1.4.2'
