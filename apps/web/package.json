@@ -20,6 +20,6 @@
     "cors": "^2.8.6",
     "dotenv-flow": "^4.1.0",
     "express": "^5.2.1",
-    "express-rate-limit": "^8.5.2"
+    "express-rate-limit": "^8.6.1"
   }
 }

@@ -21,7 +21,7 @@
   "license": "MIT",
   "packageManager": "pnpm@11.5.3",
   "dependencies": {
-    "@hono/node-server": "^2.0.10",
+    "@hono/node-server": "^2.0.12",
     "dotenv-flow": "^4.1.0",
     "uuid": "^14.0.1"
   },
