@@ -43,4 +43,6 @@ COPY --from=base /app /app
 
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+CMD ["pnpm", "-w", "run", "dev"]
 ENTRYPOINT ["entrypoint.sh"]
