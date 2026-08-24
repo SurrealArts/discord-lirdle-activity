@@ -19,7 +19,7 @@
     "@lirdle/db": "workspace:*",
     "@lirdle/logger": "workspace:*",
     "canvas": "^3.2.3",
-    "discord-api-types": "^0.38.51",
+    "discord-api-types": "^0.38.53",
     "discord.js": "^14.27.0",
     "dotenv-flow": "^4.1.0",
     "express": "^5.2.1",
