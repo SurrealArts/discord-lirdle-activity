@@ -1,4 +1,4 @@
-FROM node:22-bullseye-slim AS base
+FROM node:26-bookworm-slim AS base
 
 RUN apt-get update && apt-get install -y \
 	python3 \
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 	librsvg2-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
+RUN npm install -g pnpm@11.17.0
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ COPY . .
 
 RUN pnpm --filter @lirdle/db exec prisma generate
 
-FROM node:22-bullseye-slim
+FROM node:26-bookworm-slim
 RUN apt-get update && apt-get install -y --fix-missing \
 	libcairo2 \
 	libjpeg62-turbo \
@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y --fix-missing \
 	librsvg2-2 \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
+RUN npm install -g pnpm@11.17.0
 WORKDIR /app
 
 COPY --from=base /app /app
