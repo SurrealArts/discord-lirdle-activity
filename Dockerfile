@@ -1,4 +1,4 @@
-FROM node:22-bullseye-slim AS base
+FROM node:26-bullseye-slim AS base
 
 RUN apt-get update && apt-get install -y \
 	python3 \
@@ -27,7 +27,7 @@ COPY . .
 
 RUN pnpm --filter @lirdle/db exec prisma generate
 
-FROM node:22-bullseye-slim
+FROM node:26-bullseye-slim
 RUN apt-get update && apt-get install -y --fix-missing \
 	libcairo2 \
 	libjpeg62-turbo \
