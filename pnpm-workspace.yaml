@@ -8,6 +8,10 @@ allowBuilds:
   cloudflared: true
   prisma: true
 overrides:
-  hono: '>=4.12.27'
+  hono: '>=4.13.16'
   find-my-way: '>=9.7.0'
   valibot: '>=1.4.2'
+  '@discord/embedded-app-sdk>zod': '4.6.7'
+minimumReleaseAgeExclude:
+  - hono
+  - zod
